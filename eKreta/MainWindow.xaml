@@ -1,0 +1,50 @@
+﻿<Window x:Class="eKreta.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:eKreta"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        FontSize="24"
+        WindowStyle="None"
+        Title="eKréta" Height="800" Width="1100">
+    <DockPanel Background="CornflowerBlue">
+
+        <StackPanel Height="30" 
+                    DockPanel.Dock="Top"
+                    >
+            <TextBlock Text="eKréta Adminisztrátori felület"
+                       FontWeight="ExtraBold"
+                       Foreground="White"
+                       TextAlignment="Center"
+                       ></TextBlock>
+        </StackPanel>
+        <StackPanel Width="200" DockPanel.Dock="Left">
+            <ListView>
+                <ListViewItem x:Name="diakMenu"
+                              Content="Diákok"
+                              MouseLeftButtonUp="diakMenu_MouseLeftButtonUp"
+                              >
+                </ListViewItem>
+                <ListViewItem x:Name="tanarMenu"
+                              Content="Tanárok"
+                              MouseLeftButtonUp="tanarMenu_MouseLeftButtonUp">
+                </ListViewItem>
+                <ListViewItem x:Name="osztalyMenu" 
+                              Content="Osztályok"
+                              MouseLeftButtonUp="osztalyMenu_MouseLeftButtonUp"></ListViewItem>
+                <ListViewItem x:Name="termekMenu"
+                              Content="Termek"
+                              MouseLeftButtonUp="termekMenu_MouseLeftButtonUp"></ListViewItem>
+                <ListViewItem x:Name="felhasznalokMenu"
+                              Content="Felhasználók"
+                              MouseLeftButtonUp="felhasznalokMenu_MouseLeftButtonUp"></ListViewItem>
+                <ListViewItem x:Name="bezarasMenu"
+                              Content="Bezárás"
+                              MouseLeftButtonUp="bezarasMenu_MouseLeftButtonUp"
+                              ></ListViewItem>
+            </ListView>
+        </StackPanel>
+    </DockPanel>
+</Window>
