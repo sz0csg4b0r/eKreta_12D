@@ -15,8 +15,6 @@
   <ItemGroup>
     <Folder Include="Services\" />
     <Folder Include="Views\" />
-    <Folder Include="UserControls\" />
-    <Folder Include="Resources\" />
   </ItemGroup>
 
 </Project>
