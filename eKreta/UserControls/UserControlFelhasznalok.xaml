@@ -5,8 +5,73 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:eKreta.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+             >
+    <StackPanel>
+        <DataGrid Width="1100" Height="600" x:Name="datagridFelhasznalok"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  IsReadOnly="True"
+                  SelectionChanged="datagridFelhasznalok_SelectionChanged"
+                  >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="Felhasználó név" Binding="{ Binding FelhasznaloNev}" />
+                <DataGridTextColumn Header="Teljes név" Binding="{Binding TeljesNev}"/>
+                <DataGridTextColumn Header="Szerepkör Id" Binding="{Binding Szerepkor}"/>
+                <DataGridTextColumn Header="Szerepkör név" Binding="{Binding SzerepkorNev}"/>
+            </DataGrid.Columns>
+            <WrapPanel VerticalAlignment="Center" Margin="130,10,130,0">
+                <StackPanel Width="300">
+                    <TextBlock Text="Felhasználó név:"/>
+                    <TextBox x:Name="felhasznaloNevTxtBx"/>
+                    <TextBlock Text="Teljes név:"/>
+                    <TextBox x:Name="teljesNevTxtBx"/>
+                    <TextBlock Text="Jelszó:"/>
+                    <PasswordBox x:Name="jelszoBx"/>
+                    <TextBlock Text="Szerepkör:"/>
+                    <ComboBox x:Name="szerepkor"/>
+                </StackPanel>
+                <StackPanel>
+                    <Button 
+                        x:Name="mentesBtn"
+                        Width="200"
+                        Margin="20,10,0,0"
+                        Background="Green"
+                        Foreground="White"
+                        Content="Mentés"
+                        Click="mentesBtn_Click"
+                        ></Button>
+                    <Button 
+    x:Name="torlesBtn"
+    Width="200"
+    Margin="20,10,0,0"
+    Background="Red"
+    Foreground="White"
+    Content="Törlés"
+   Click="torlesBtn_Click"
+    ></Button>
+                    <Button 
+    x:Name="modBth"
+    Width="200"
+    Margin="20,10,0,0"
+    Background="Yellow"
+    
+    Content="Módosítás"
+   Click="modBth_Click"
+    ></Button>
+
+
+
+
+
+                </StackPanel>
+
+
+
+            </WrapPanel>
+
+
+        </DataGrid>
+    </StackPanel>
 </UserControl>

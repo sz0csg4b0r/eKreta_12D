@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using eKreta.Models;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace eKreta.UserControls
 {
@@ -20,9 +9,38 @@ namespace eKreta.UserControls
     /// </summary>
     public partial class UserControlFelhasznalok : UserControl
     {
+        List<Felhasznalo> felhasznalok;
+        Felhasznalo valasztottFelhasznalo;
+        
         public UserControlFelhasznalok()
         {
             InitializeComponent();
+            felhasznalok = new List<Felhasznalo>();
+            ReadDatabase();
+            mentesBtn.Visibility = Visibility.Visible;
+            modBth.Visibility = Visibility.Hidden;
+            torlesBtn.Visibility = Visibility.Hidden;
+            szerepkor.ItemsSource = Enum.GetNames(typeof(Szerepkorok));
+        }
+
+        private void ReadDatabase()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void datagridFelhasznalok_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void torlesBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void modBth_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
