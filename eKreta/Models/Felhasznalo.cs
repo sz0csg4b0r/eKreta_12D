@@ -20,7 +20,7 @@ namespace eKreta.Models
         {
         }
 
-        public string SzerepkorNev => Enum.GetName(typeof(Szerepkorok), SzerepkorNev) ?? "Ismeretlen";
+        public string SzerepkorNev => Enum.GetName(typeof(Szerepkorok), Szerepkor) ?? "Ismeretlen";
         
 
         public Felhasznalo(string felhasznaloNev, string teljesNev, string jelszo, int szerepkor)

@@ -11,7 +11,7 @@ namespace eKreta.UserControls
     {
         List<Felhasznalo> felhasznalok;
         Felhasznalo valasztottFelhasznalo;
-        
+
         public UserControlFelhasznalok()
         {
             InitializeComponent();
@@ -25,12 +25,33 @@ namespace eKreta.UserControls
 
         private void ReadDatabase()
         {
-            throw new NotImplementedException();
+            // Módosító mezők default állapota:
+            szerepkor.SelectedItem = Enum.GetName(typeof(Szerepkorok), Szerepkorok.Vendég);
+            teljesNevTxtBx.Text = "";
+            felhasznaloNevTxtBx.Text = "";
+            jelszoBx.Password = "";
+
+            // Adat lekérés adatbázisból, adatok átadása datagridnek:
+            var FelhasznaloRepository = new GenericRepository<Felhasznalo>(App.databasePath);
+            var FelhasznaloLekerdezes = FelhasznaloRepository.GetAll();
+            datagridFelhasznalok.ItemsSource = FelhasznaloLekerdezes;
+
+
         }
 
         private void datagridFelhasznalok_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            modBth.Visibility = Visibility.Visible;
+            torlesBtn.Visibility = Visibility.Visible;
+            mentesBtn.Visibility = Visibility.Hidden;
 
+            if (datagridFelhasznalok.SelectedItem != null)
+            {
+                valasztottFelhasznalo = (Felhasznalo)datagridFelhasznalok.SelectedItem;
+                felhasznaloNevTxtBx.Text = valasztottFelhasznalo.FelhasznaloNev;
+                teljesNevTxtBx.Text = valasztottFelhasznalo.TeljesNev;
+                szerepkor.Text = valasztottFelhasznalo.SzerepkorNev;
+            }
         }
 
         private void torlesBtn_Click(object sender, RoutedEventArgs e)
@@ -40,6 +61,26 @@ namespace eKreta.UserControls
 
         private void modBth_Click(object sender, RoutedEventArgs e)
         {
+
+        }
+
+        private void mentesBtn_Click(object sender, RoutedEventArgs e)
+        {
+            //Szerepkör névből szerepkörID
+            string kivalasztottSzerepkorNev = (string)szerepkor.SelectedItem;
+            Szerepkorok kivalasztottSzerepkor = (Szerepkorok)Enum.Parse(typeof(Szerepkorok), kivalasztottSzerepkorNev);
+            int kivalasztottSzerepkorId = (int)kivalasztottSzerepkor;
+
+            // Uj felhasználó objektum létrehozás
+            Felhasznalo ujFelhasznalo = new Felhasznalo(felhasznaloNevTxtBx.Text,
+                teljesNevTxtBx.Text, jelszoBx.Password, kivalasztottSzerepkorId);
+
+            // Uj user repo, insert to db
+            var FelhasznaloRepository = new GenericRepository<Felhasznalo>(App.databasePath);
+            FelhasznaloRepository.insert(ujFelhasznalo);
+
+            //Datagrid update:
+            ReadDatabase();
 
         }
     }
