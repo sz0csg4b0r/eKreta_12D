@@ -1,4 +1,5 @@
 ﻿using eKreta.Models;
+using eKreta.Services;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -36,7 +37,9 @@ namespace eKreta.UserControls
             var FelhasznaloLekerdezes = FelhasznaloRepository.GetAll();
             datagridFelhasznalok.ItemsSource = FelhasznaloLekerdezes;
 
-
+            mentesBtn.Visibility = Visibility.Visible;
+            modBth.Visibility = Visibility.Hidden;
+            torlesBtn.Visibility = Visibility.Hidden;
         }
 
         private void datagridFelhasznalok_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -57,10 +60,34 @@ namespace eKreta.UserControls
         private void torlesBtn_Click(object sender, RoutedEventArgs e)
         {
 
+            var FelhasznaloRepository = new GenericRepository<Felhasznalo>(App.databasePath);
+            FelhasznaloRepository.delete(valasztottFelhasznalo);
+            ReadDatabase();
+
         }
 
         private void modBth_Click(object sender, RoutedEventArgs e)
         {
+            valasztottFelhasznalo.FelhasznaloNev = felhasznaloNevTxtBx.Text;
+            valasztottFelhasznalo.TeljesNev = teljesNevTxtBx.Text;
+            string kivalasztottSzerepkorNev = (string)szerepkor.SelectedItem;
+            Szerepkorok kivalasztottSzerepkor = (Szerepkorok)Enum.Parse(typeof(Szerepkorok), kivalasztottSzerepkorNev);
+            int kivalasztottSzerepkorId = (int)kivalasztottSzerepkor;
+            valasztottFelhasznalo.Szerepkor = kivalasztottSzerepkorId;
+
+            //TODO: jelszó - SHA!!!!! - jelszót csak akkor módosítunk ha megadja az inputban. 
+            if (jelszoBx.Password !="")
+            {
+                valasztottFelhasznalo.Jelszo = PasswordHelper.HashPassword(jelszoBx.Password);
+            }
+
+            // Repo update:
+            var FelhasznaloRepository = new GenericRepository<Felhasznalo>(App.databasePath);
+            FelhasznaloRepository.update(valasztottFelhasznalo);
+
+            //Datagrid update:
+            ReadDatabase();
+
 
         }
 
@@ -73,7 +100,7 @@ namespace eKreta.UserControls
 
             // Uj felhasználó objektum létrehozás
             Felhasznalo ujFelhasznalo = new Felhasznalo(felhasznaloNevTxtBx.Text,
-                teljesNevTxtBx.Text, jelszoBx.Password, kivalasztottSzerepkorId);
+                teljesNevTxtBx.Text, PasswordHelper.HashPassword(jelszoBx.Password), kivalasztottSzerepkorId);
 
             // Uj user repo, insert to db
             var FelhasznaloRepository = new GenericRepository<Felhasznalo>(App.databasePath);
